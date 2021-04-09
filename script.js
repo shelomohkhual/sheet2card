@@ -57,7 +57,7 @@ function renderError(err) {
 
 
 function fetchSheet(id = '1zq3qVtGpZ5c_nm_czMcTdEsc3d6RiAJGcpqwIqm_Xco') {
-    const url = `http://gsx2json.com/api?id=${id}`;
+    const url = `https://gsx2json.com/api?id=${id}`;
     var req = new XMLHttpRequest();
     req.open("GET", url, true);
 
