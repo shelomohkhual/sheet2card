@@ -1,8 +1,10 @@
-// window.onload = function () {
-//     const urlParams = new URLSearchParams(window.location.search);
-//     debugger;
-//     // const myParam = urlParams.get('myParam');
-// };
+window.onload = function () {
+    if (window.location.host === "127.0.0.1:5500") return;
+
+    const id = window.location.pathname.split('/')[1];
+    if (!id || id === '' || id === '/') return;
+    fetchSheet(id);
+};
 const container = document.getElementById('card-list-container');
 
 const loadingEle = `<div id='loading'>
@@ -56,7 +58,9 @@ function renderError(err) {
 
 
 
-function fetchSheet(id = '1zq3qVtGpZ5c_nm_czMcTdEsc3d6RiAJGcpqwIqm_Xco') {
+function fetchSheet() {
+    if (!id || id == '') return;
+
     const url = `https://gsx2json.com/api?id=${id}`;
     var req = new XMLHttpRequest();
     req.open("GET", url, true);
