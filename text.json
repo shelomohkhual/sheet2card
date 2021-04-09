@@ -1,0 +1,44 @@
+{
+    "columns": {
+        "timestamp": [
+            "4/6/2021 18:34:22"
+        ],
+        "jobposition": [
+            "boss"
+        ],
+        "companyrestaurantname": [
+            "at home"
+        ],
+        "salaryrange": [
+            4000
+        ],
+        "address": [
+            "home"
+        ],
+        "contactnumber": [
+            1234
+        ],
+        "gender": [
+            "Male"
+        ],
+        "howmanypeopleneed": [
+            1
+        ],
+        "comments": [
+            "good"
+        ]
+    },
+    "rows": [
+        {
+            "timestamp": "4/6/2021 18:34:22",
+            "jobposition": "boss",
+            "companyrestaurantname": "at home",
+            "salaryrange": 4000,
+            "address": "home",
+            "contactnumber": 1234,
+            "gender": "Male",
+            "howmanypeopleneed": 1,
+            "comments": "good"
+        }
+    ]
+}
