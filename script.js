@@ -1,10 +1,15 @@
 window.onload = function () {
-    if (window.location.host === "127.0.0.1:5500") return;
-
-    const id = window.location.pathname.split('/')[1];
-    if (!id || id === '' || id === '/') return;
+    const params = new URLSearchParams(window.location.search);
+    var id = params.get('id');
+    if (!id || id === '') return;
+    removeForm();
     fetchSheet(id);
 };
+
+function removeForm() {
+    document.getElementById('form').remove();
+}
+
 const container = document.getElementById('card-list-container');
 
 const loadingEle = `<div id='loading'>
@@ -18,18 +23,30 @@ function addElementTo(parentEle, childrenEle) {
     parentEle.innerHTML = childrenEle;
 }
 
+
+function renderShareLink(id) {
+    var host = window.location.origin;
+    var link = `${host}?id=${id}`;
+
+    createTextAreaLink(link);
+
+    addElementTo(document.getElementById('share-link'), `
+    <span>
+    ${link}
+        <a href='#' onclick="copyToClip()">click to copy</a>
+    </span>
+    `);
+}
+
 function generateCard(json) {
     if (!json) return;
 
-
-    const parsed = JSON.parse(json);
-    console.log('data', json);
-    if (!parsed.rows) {
-        renderError(parsed);
+    if (!json.rows) {
+        renderError(json);
         return;
     };
 
-    return parsed.rows.map(eachRow => {
+    return json.rows.map(eachRow => {
         const keys = Object.keys(eachRow);
         const values = Object.values(eachRow);
 
@@ -47,9 +64,9 @@ function generateCard(json) {
 };
 
 
-function renderError(err) {
+function renderError(err = null) {
     addElementTo(container, `<div id='error-message'>
-    ${(typeof err) === 'string' ? err : JSON.stringify(err)}</div>`);
+    ${err ? (typeof err) === 'string' ? err : JSON.stringify(err) : 'Make sure google sheet id is correct'}</div>`);
 
     setTimeout(() => {
         document.getElementById('error-message').remove();
@@ -62,24 +79,61 @@ function fetchSheet(id) {
     if (!id || id == '') return;
 
     const url = `https://gsx2json.com/api?id=${id}`;
-    var req = new XMLHttpRequest();
-    req.open("GET", url, true);
 
     // add loading while fetching data
     addElementTo(container, loadingEle);
 
-    req.onload = function (e) {
-        addElementTo(container, generateCard(req.response));
-    };
-    req.send();
+    fetch(url)
+        .then(res => {
+            if (res.status == 200) {
+                return res.json();
+            }
+            else if (res.status == 501) {
+                throw new Error("Answer not found");
+            }
+            else {
+                throw new Error("Some other status code");
+            }
+        })
+        .then(json => {
+            renderShareLink(id);
+            addElementTo(container, generateCard(json));
+        })
+        .catch(err => {
+            renderError();
+        });
+
+
+    // req.onload = function (e) {
+    //     req.response && 
+    // };
+
+    // req.onerror = (e) => {
+    //     console.log('err', e);
+    // };
+    // req.send();
+};
+
+function copyToClip() {
+    const el = document.getElementById('text-copy');
+    el.select();
+    document.execCommand('copy');
+}
+
+const createTextAreaLink = (str) => {
+    const el = document.createElement('textarea');
+    el.setAttribute("id", "text-copy");
+    el.value = str;
+    document.body.appendChild(el);
 };
 
 function onAddGSheetUrl() {
-    var value = document.getElementById('input').value;
+    var id = document.getElementById('input').value;
 
     // remove previous children elements
     container.innerHTML = '';
 
-    value !== '' &&
-        fetchSheet(value);
+    if (id === '') return;
+
+    fetchSheet(id);
 };
