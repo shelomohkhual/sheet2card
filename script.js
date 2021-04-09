@@ -5,14 +5,15 @@
 // };
 const container = document.getElementById('card-list-container');
 
-function renderError(err) {
-    container.innerHTML += `<div id='error-message'>
-    ${(typeof err) === 'string' ? err : JSON.stringify(err)}</div>`;
+const loadingEle = `<div id='loading'>
+<div class="load">
+  <div class="loading-line"></div>
+  <div class="loading-line"></div>
+  <div class="loading-line"></div>
+</div></div>`;
 
-    setTimeout(() => {
-        document.getElementById('error-message').remove();
-    }, 8000);
-
+function addElementTo(parentEle, childrenEle) {
+    parentEle.innerHTML = childrenEle;
 }
 
 function generateCard(json) {
@@ -26,7 +27,7 @@ function generateCard(json) {
         return;
     };
 
-    parsed.rows.map(eachRow => {
+    return parsed.rows.map(eachRow => {
         const keys = Object.keys(eachRow);
         const values = Object.values(eachRow);
 
@@ -37,11 +38,23 @@ function generateCard(json) {
             </li>`
         );
 
-        container.innerHTML = `<div class='card'>
+        return `<div class='card'>
         ${cardList.join('')}
         </div>`;
     });
 };
+
+
+function renderError(err) {
+    addElementTo(container, `<div id='error-message'>
+    ${(typeof err) === 'string' ? err : JSON.stringify(err)}</div>`);
+
+    setTimeout(() => {
+        document.getElementById('error-message').remove();
+    }, 8000);
+}
+
+
 
 function fetchSheet(id = '1zq3qVtGpZ5c_nm_czMcTdEsc3d6RiAJGcpqwIqm_Xco') {
     const url = `http://gsx2json.com/api?id=${id}`;
@@ -49,25 +62,20 @@ function fetchSheet(id = '1zq3qVtGpZ5c_nm_czMcTdEsc3d6RiAJGcpqwIqm_Xco') {
     req.open("GET", url, true);
 
     // add loading while fetching data
-    container.innerHTML += `<div id='loading'>
-      <div class="load">
-        <div class="loading-line"></div>
-        <div class="loading-line"></div>
-        <div class="loading-line"></div>
-    </div></div>`;
+    addElementTo(container, loadingEle);
 
     req.onload = function (e) {
-        generateCard(req.response);
-
-        // remove the loading
-        document.getElementById('loading').remove();
+        addElementTo(container, generateCard(req.response));
     };
     req.send();
 };
 
 function onAddGSheetUrl() {
     var value = document.getElementById('input').value;
+
+    // remove previous children elements
     container.innerHTML = '';
+
     value !== '' &&
         fetchSheet(value);
 };
