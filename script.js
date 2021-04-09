@@ -3,7 +3,7 @@ window.onload = function () {
     var id = params.get('id');
     if (!id || id === '') return;
     removeForm();
-    fetchSheet(id);
+    fetchSheet(id, true);
 };
 
 function removeForm() {
@@ -75,7 +75,7 @@ function renderError(err = null) {
 
 
 
-function fetchSheet(id) {
+function fetchSheet(id, onlyView = false) {
     if (!id || id == '') return;
 
     const url = `https://gsx2json.com/api?id=${id}`;
@@ -96,7 +96,7 @@ function fetchSheet(id) {
             }
         })
         .then(json => {
-            renderShareLink(id);
+            !onlyView && renderShareLink(id);
             addElementTo(container, generateCard(json));
         })
         .catch(err => {
