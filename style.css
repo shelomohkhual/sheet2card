@@ -51,11 +51,15 @@ body{
     font-weight: normal;
     margin-bottom: 8px;
 }
-.card-li{
+.card-li,.card-li-g{
+  padding: 5px 10px;
     list-style: none;
     margin-bottom: 8px;
     text-transform: capitalize;
+}
 
+.card-li-g{
+  background-color: #efefef;
 }
 
 #error-message{
@@ -68,8 +72,19 @@ body{
     opacity: 0.5;
 }
 
-.card-label{
+.row-container {
+  display: flex;
+}
+
+.card-label,.card-label-small{
+  opacity: 1;
+  width: 50%;
     font-weight: lighter;
+}
+
+.card-label-small{
+  opacity: 0.5;
+  font-size: 0.7rem;
 }
 
 .load{

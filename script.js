@@ -38,35 +38,46 @@ function renderShareLink(id) {
     `);
 }
 
-function generateCard(json) {
-    if (!json) return;
-
-    if (!json.rows) {
+function generateCard(list) {
+    if (!list || list.length === 0) {
         renderError(json);
         return;
     };
+    var keys = [];
 
-    return json.rows.map(eachRow => {
-        const keys = Object.keys(eachRow);
-        const values = Object.values(eachRow);
+    return list.map((eachRow, rIndex) => {
+        if (rIndex === 0) {
+            keys = eachRow;
+            return;
+        }
 
-        const cardList = keys.map((k, kIndex) =>
-            `<li class='card-li'>
-                <span class='card-label'>${k}:</span>
-                ${values[kIndex]}
-            </li>`
-        );
+        if (!keys.length) return;
 
-        return `<div class='card'>
-        ${cardList.join('')}
-        </div>`;
+        const cardList = eachRow.map((value, kIndex) => {
+
+            const label = keys[kIndex];
+            const isMyanmarUnicode = label.match(/[\u1000-\u109F]+/g);
+            const labelClass = isMyanmarUnicode ? "card-label-small" : 'card-label';
+
+            return value !== '' ? `<li class='card-li'>
+            <div class='row-container'>
+                <div class=${labelClass}>${label}:</div>
+                ${value}
+                </div>
+            </li > `: '';
+        });
+        console.log('cardList', cardList);
+        return `<div class='card' >
+            ${cardList.join('')}
+        </div > `;
     });
 };
 
 
 function renderError(err = null) {
-    addElementTo(container, `<div id='error-message'>
-    ${err ? (typeof err) === 'string' ? err : JSON.stringify(err) : 'Make sure google sheet id is correct'}</div>`);
+    addElementTo(container, `<div id = 'error-message'>
+    ${err ? (typeof err) === 'string' ? err : JSON.stringify(err) : 'Make sure google sheet id is correct'
+        }</div >`);
 
     setTimeout(() => {
         document.getElementById('error-message').remove();
@@ -78,8 +89,7 @@ function renderError(err = null) {
 function fetchSheet(id, onlyView = false) {
     if (!id || id == '') return;
 
-    const url = `https://gsx2json.com/api?id=${id}`;
-
+    const url = `https://sheet.thesimpleapi.com/${id}`;
     // add loading while fetching data
     addElementTo(container, loadingEle);
 
@@ -95,12 +105,13 @@ function fetchSheet(id, onlyView = false) {
                 throw new Error("Some other status code");
             }
         })
-        .then(json => {
+        .then(list => {
             !onlyView && renderShareLink(id);
-            addElementTo(container, generateCard(json));
+            console.log('list', list);
+            addElementTo(container, generateCard(list).join(''));
         })
         .catch(err => {
-            renderError();
+            renderError(err);
         });
 
 
