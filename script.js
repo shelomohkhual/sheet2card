@@ -6,7 +6,6 @@ window.onload = function () {
     removeForm();
     fetchSheet(id, true);
 };
-
 function removeForm() {
     document.getElementById('form').remove();
 }
@@ -68,7 +67,6 @@ function generateCard(list) {
                 </div>
             </li > `: '';
         });
-        console.log('cardList', cardList);
         return `<div class='card' >
             ${cardList.join('')}
         </div > `;
@@ -105,8 +103,7 @@ function fetchSheet(id, onlyView = false) {
         })
         .then(list => {
             if (!list) return;
-            !onlyView && renderShareLink(id);
-            addElementTo(container, generateCard(list).join(''));
+            !onlyView && renderShareLink(id);]addElementTo(container, generateCard(list).join(''));
         })
         .catch(err => {
             console.log('err', err);

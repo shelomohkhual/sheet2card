@@ -12,6 +12,7 @@
   --barLow-FFM:'Barlow', sans-serif;
   --bg-color:#fffae9;
   --border: 2px solid var(--main-color);
+  --tran-white:#ffffffd6;
 }
 .test {  
   font-size: var(--font-size)
@@ -31,13 +32,14 @@ body{
     color: var(--main-color);
 }
 .brand {
-text-decoration: none;
+  text-decoration: none;
 }
-a, .redirect-link{
+a,.redirect-link{
   color: var(--main-color);
 }
+
 .redirect-link::after{
-content: '\2197';
+  content: '\2197\00FE0E';
 }
 
 input{
@@ -56,7 +58,7 @@ button {
     padding: 9px 20px;
     border: var(--border);
     background: #00755c;
-    color: var(--bg-color);
+    color: var(--tran-white);
     border-radius: 10px;
     box-shadow: 0px 3px 0px 0px rgb(0 0 0);
 }
@@ -103,7 +105,7 @@ footer {
 
 .card {
   position: relative;
-  background: #ffffffd6;
+  background: var(--tran-white);
   border-radius: 10px;
   border: var(--border);
   padding: 10px;
@@ -116,7 +118,6 @@ footer {
 .card-li,.card-li-g{
   padding: 5px 10px;
     list-style: none;
-    text-transform: capitalize;
 }
 
 .card-li-g{
@@ -129,7 +130,7 @@ footer {
 }
 
 .note-text{
-    font-size: 12px;
+    font-size: 0.9rem;
     opacity: 0.5;
 }
 
