@@ -41,7 +41,7 @@ function renderShareLink(id) {
 
 function generateCard(list) {
     if (!list || list.length === 0) {
-        renderError(json);
+        renderError(list);
         return;
     };
     var keys = [];
@@ -77,7 +77,7 @@ function generateCard(list) {
 
 function renderError(err = null) {
     addElementTo(container, `<div id = 'error-message'>
-    ${err ? (typeof err) === 'string' ? err : JSON.stringify(err) : 'Make sure google sheet id is correct'
+    ${err ? (typeof err) === 'string' && err !== {} ? err : JSON.stringify(err) : 'Make sure google sheet id is correct or published'
         }</div >`);
 
     setTimeout(() => {
@@ -98,32 +98,19 @@ function fetchSheet(id, onlyView = false) {
         .then(res => {
             if (res.status == 200) {
                 return res.json();
-            }
-            else if (res.status == 501) {
-                throw new Error("Answer not found");
-            }
-            else {
-                throw new Error("Some other status code");
+            } else {
+                renderError();
             }
         })
         .then(list => {
+            if (!list) return;
             !onlyView && renderShareLink(id);
-            console.log('list', list);
             addElementTo(container, generateCard(list).join(''));
         })
         .catch(err => {
-            renderError(err);
+            console.log('err', err);
+            renderError();
         });
-
-
-    // req.onload = function (e) {
-    //     req.response && 
-    // };
-
-    // req.onerror = (e) => {
-    //     console.log('err', e);
-    // };
-    // req.send();
 };
 
 function copyToClip() {
@@ -144,6 +131,7 @@ function onAddGSheetUrl() {
 
     // remove previous children elements
     container.innerHTML = '';
+    document.getElementById('share-link').innerHTML = '';
 
     if (id === '') return;
 

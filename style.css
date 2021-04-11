@@ -20,10 +20,13 @@ body{
     background-color: #fffae9;
     color: #1f1f1f;
 }
-a {
+.brand {
+text-decoration: none;
+}
+a, .redirect-link{
   color:#1f1f1f;
 }
-a::after{
+.redirect-link::after{
 content: '\2197';
 }
 
@@ -34,16 +37,25 @@ input{
   background: transparent;
   color: #1f1f1f;
   border-radius: 10px;
+  box-shadow: 0px 3px 0px 0px rgb(0 0 0);
 }
 
 button {
-  font-family: 'Barlow', sans-serif;
+  /* font-family: 'Barlow', sans-serif;
   text-transform: uppercase;
   padding: 9px 20px;
   border: 1px solid;
   background: #1f1f1f;
   color: #fffae9;
-  border-radius: 10px;
+  border-radius: 10px; */
+    font-family: 'Barlow', sans-serif;
+    text-transform: uppercase;
+    padding: 9px 20px;
+    border: 2px solid #1f1f1f;
+    background: #00755c;
+    color: #fffae9;
+    border-radius: 10px;
+    box-shadow: 0px 3px 0px 0px rgb(0 0 0);
 }
 
 .header {
@@ -58,7 +70,12 @@ button {
   margin: auto;
   width: 30%;
   min-width: 400px;
-  height: 100vh;
+  height: 95vh;
+}
+
+footer {
+  text-align: center;
+  font-size: 14px;
 }
 
 .input-container {
@@ -82,7 +99,17 @@ button {
 }
 
 .card {
-    position: relative;
+  position: relative;
+  background: #ffffffd6;
+  border-radius: 10px;
+  border: 3px solid;
+  padding: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 5px 0px 0px rgb(0 0 0);
+  transition: 0.3s ease;
+  font-weight: normal;
+  margin-bottom: 8px;
+    /* position: relative;
     background: #ffffff;
     border-radius: 10px;
     padding: 10px;
@@ -90,7 +117,7 @@ button {
     box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
     transition: 0.3s ease;
     font-weight: normal;
-    margin-bottom: 8px;
+    margin-bottom: 8px; */
 }
 .card-li,.card-li-g{
   padding: 5px 10px;
