@@ -6,6 +6,16 @@
   font-family: 'SpratCondensedMedium';
   src: url('/assets/fonts/sprat/Sprat-CondensedMedium.otf') format('opentype')
 }
+:root {  
+  --font-size: 20px;
+  --main-color: #1f1f1f;
+  --barLow-FFM:'Barlow', sans-serif;
+  --bg-color:#fffae9;
+  --border: 2px solid var(--main-color);
+}
+.test {  
+  font-size: var(--font-size)
+}
 
 * {
     box-sizing: border-box;
@@ -16,15 +26,15 @@
 
 body{
     margin: 0;
-    font-family: 'Barlow', sans-serif;
-    background-color: #fffae9;
-    color: #1f1f1f;
+    font-family: var(--barLow-FFM);
+    background-color: var(--bg-color);
+    color: var(--main-color);
 }
 .brand {
 text-decoration: none;
 }
 a, .redirect-link{
-  color:#1f1f1f;
+  color: var(--main-color);
 }
 .redirect-link::after{
 content: '\2197';
@@ -32,28 +42,21 @@ content: '\2197';
 
 input{
   padding: 5px;
-  font-family: 'Barlow', sans-serif;
-  border: 2px solid #1f1f1f;
-  background: transparent;
-  color: #1f1f1f;
+  font-family: var(--barLow-FFM);
+  border: var(--border);
+  background: #ffffff4a;
+  color: var(--main-color);
   border-radius: 10px;
   box-shadow: 0px 3px 0px 0px rgb(0 0 0);
 }
 
 button {
-  /* font-family: 'Barlow', sans-serif;
-  text-transform: uppercase;
-  padding: 9px 20px;
-  border: 1px solid;
-  background: #1f1f1f;
-  color: #fffae9;
-  border-radius: 10px; */
-    font-family: 'Barlow', sans-serif;
+    font-family: var(--barLow-FFM);
     text-transform: uppercase;
     padding: 9px 20px;
-    border: 2px solid #1f1f1f;
+    border: var(--border);
     background: #00755c;
-    color: #fffae9;
+    color: var(--bg-color);
     border-radius: 10px;
     box-shadow: 0px 3px 0px 0px rgb(0 0 0);
 }
@@ -102,22 +105,13 @@ footer {
   position: relative;
   background: #ffffffd6;
   border-radius: 10px;
-  border: 3px solid;
+  border: var(--border);
   padding: 10px;
   box-sizing: border-box;
   box-shadow: 0px 5px 0px 0px rgb(0 0 0);
   transition: 0.3s ease;
   font-weight: normal;
   margin-bottom: 8px;
-    /* position: relative;
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
-    transition: 0.3s ease;
-    font-weight: normal;
-    margin-bottom: 8px; */
 }
 .card-li,.card-li-g{
   padding: 5px 10px;
@@ -161,7 +155,7 @@ footer {
     width: 15px;
     height: 15px;
     border-radius: 15px;
-    background-color: #1f1f1f;
+    background-color: var(--main-color);
   }
 
 @keyframes loadingC {
