@@ -103,7 +103,7 @@ function fetchSheet(id, onlyView = false) {
         })
         .then(list => {
             if (!list) return;
-            !onlyView && renderShareLink(id);]addElementTo(container, generateCard(list).join(''));
+            !onlyView && renderShareLink(id); addElementTo(container, generateCard(list).join(''));
         })
         .catch(err => {
             console.log('err', err);
