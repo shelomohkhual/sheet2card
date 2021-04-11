@@ -1,4 +1,5 @@
 window.onload = function () {
+    generateBGColor();
     const params = new URLSearchParams(window.location.search);
     var id = params.get('id');
     if (!id || id === '') return;
@@ -137,3 +138,10 @@ function onAddGSheetUrl() {
 
     fetchSheet(id);
 };
+
+function generateBGColor() {
+    const randomHSLColor = `hsl(${Math.floor(Math.random() * 360)}deg,100%,88%)`;
+    var cssRoot = document.querySelector(':root');
+
+    cssRoot.style.setProperty('--bg-color', randomHSLColor);
+}
