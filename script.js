@@ -31,10 +31,11 @@ function renderShareLink(id) {
     createTextAreaLink(link);
 
     addElementTo(document.getElementById('share-link'), `
-    <span>
+    <div>
     ${link}
+    <br/>
         <a href='#' onclick="copyToClip()">click to copy</a>
-    </span>
+    </div>
     `);
 }
 
